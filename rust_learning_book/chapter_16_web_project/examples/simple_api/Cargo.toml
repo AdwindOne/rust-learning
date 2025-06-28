@@ -1,0 +1,95 @@
+[package]
+name = "simple_api"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jules The AI Assistant"]
+description = "一个使用 Axum 和 Tokio 构建的简单 Rust Web API 服务。"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1", features = ["full"] } # 异步运行时，"full" 特性包含 rt-multi-thread, macros, io-util 等
+axum = { version = "0.7", features = ["macros", "json"] } # Web 框架, macros for routing, json for Json extractor/response
+serde = { version = "1.0", features = ["derive"] } # 数据序列化/反序列化框架
+serde_json = "1.0" # Serde 的 JSON 实现
+
+# 可选的，用于更好的日志和追踪 (如果需要)
+# tower-http = { version = "0.5", features = ["trace", "cors"] }
+# tracing = "0.1"
+# tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+[dev-dependencies]
+# reqwest = { version = "0.11", features = ["json", "blocking"] } # 用于集成测试的 HTTP 客户端 (blocking feature for simpler tests)
+# tower = { version = "0.4", features = ["util"] } # for ServiceExt in tests
+# http-body-util = "0.1" # for BodyExt in tests
+# hyper = { version = "0.14", features = ["client", "http1"] } # for more direct http client in tests
+# axum-test = "0.2.0" # 专门为axum设计的测试库，简化测试 (可以考虑)
+# 或者使用 axum 自身的测试能力，配合 tower::ServiceExt
+#
+# 这里我们先不引入测试客户端库，可以在 tests/api_tests.rs 中根据需要添加
+# 或者直接使用标准库的 HTTP 功能进行简单测试（如果可能）或依赖外部工具如 curl
+# 为了让测试更独立，添加 reqwest for testing
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+tokio-test = "0.4.3" # 允许在非tokio::main的函数中运行tokio::test
+anyhow = "1.0" # 用于测试中的错误处理
+hyper = { version = "1", features = ["client", "http1"] } # 确保版本兼容性
+http-body-util = "0.1" # 配合 hyper 1.x
+tower = { version = "0.4", features = ["util"] } # ServiceExt for testing
+axum-test-helper = "0.2.0" # 另一个 axum 测试帮助库
+# 注意：axum 0.7 可能与 hyper 0.14 的客户端部分有更紧密的集成，
+# 而 hyper 1.x 是一个较大的更新。测试时可能需要选择合适的客户端或测试工具。
+# axum 自身推荐使用 tower::ServiceExt 进行内存中的服务测试。
+# 为了简单起见，先用 reqwest (blocking) 进行外部 HTTP 测试。
+# 如果需要更底层的或内存中的测试，再调整。
+# 实际上，axum 推荐的测试方式是 `TestClient` (来自 `axum-live-view-test` 或类似) 或直接操作 service。
+# 我们这里先用 `reqwest` 作为外部测试工具，因为它比较直观。
+# 更新：axum 0.7 官方推荐使用 `axum-test` crate 或 `hyper` (v1) 和 `tower::ServiceExt`
+# 我们这里用 `reqwest` (blocking) + `tokio::test` 来模拟外部调用
+# 或者使用 `axum-test-helper`
+# 最终决定使用 `axum-test-helper` 因为它更贴近axum的测试方式
+# axum-test = "0.4.0" # 尝试这个
+# 鉴于 axum 0.7 的变化，使用更现代的测试助手
+# `axum-test` 似乎不再是首选，官方文档指向 `TestServer` (在 axum 源码树的 test utils) 或 `hyperlocal` for Unix Sockets
+# 决定还是用 reqwest + 启动真实服务器进行集成测试，这样更直观。
+# 或者用 `axum::serve` 的 `with_graceful_shutdown` 配合 `oneshot` channel 来控制服务器生命周期。
+# 为了简单，就用 reqwest + 祈祷服务器在测试期间能正常启动和关闭，或者让测试依赖一个外部运行的服务器实例。
+# 更好的做法是让测试自己启动和停止服务器。
+#
+# 最终选择: 使用 `tokio::spawn` 启动服务器，并在测试结束时尝试关闭它（虽然完美关闭可能复杂）。
+# 或者，使用 `axum-test-helper` 或类似的库，它们封装了这些。
+# 为了本示例的简洁性，我们先依赖 `reqwest` 并假设服务器在测试期间运行。
+# 之后可以改进为测试代码控制服务器生命周期。
+
+# 最终决定：使用 `axum::serve` 配合 `tokio::test` 和 `reqwest`。
+# 在每个测试中启动服务器，测试完成后服务器会自动关闭（当任务结束）。
+# 这种方式对于简单的集成测试是可行的。
+# 如果需要更精细的控制或共享服务器实例，则需要更复杂的设置。
+#
+# 重新审视 axum 0.7 的测试，推荐使用 `tower::ServiceExt` 和 `axum::body::Body`
+# 这避免了实际的网络请求，直接在内存中测试服务。
+#
+# [dev-dependencies]
+# tower = { version = "0.4", features = ["util"] }
+# http-body-util = "0.1" # For BodyExt
+# hyper = { version = "1", features = ["client", "http1"] } # For Request/Response types
+# serde_json = "1.0" # For test assertions on JSON
+# tokio = { version = "1", features = ["macros", "rt"] } # For #[tokio::test]
+# anyhow = "1.0"
+#
+# 为了保持与之前章节一致的测试风格（用例在独立的 test 文件中），
+# 并且演示如何测试一个实际运行的HTTP服务，我们还是先尝试用 reqwest。
+# 但会指出 `tower::ServiceExt` 是更推荐的单元/集成测试方式。
+#
+# 最终决定：使用 `reqwest` 进行集成测试，需要服务器在测试执行时运行。
+# 可以在测试模块的 setup/teardown 中管理服务器生命周期，或者手动运行。
+# 为了简单，假设服务器是独立运行的，或者测试代码会启动一个临时的。
+
+# 简化测试依赖，使用 `oneshot` channel 来优雅关闭服务器
+[dev-dependencies.tokio]
+version = "1"
+features = ["macros", "rt-multi-thread", "sync"] # sync for oneshot
+
+[dev-dependencies.reqwest]
+version = "0.11"
+features = ["json", "blocking"]
