@@ -1,0 +1,13 @@
+[package]
+name = "concurrency_example"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 对于 async/await 示例，我们可能需要一个运行时，例如 tokio
+# tokio = { version = "1", features = ["full"] }
+# futures = "0.3" # 如果使用 futures::join!
+#
+# 本章主要示例不强制依赖 tokio，async 部分会注释掉或说明依赖

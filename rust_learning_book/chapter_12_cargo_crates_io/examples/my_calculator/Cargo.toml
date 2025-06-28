@@ -1,0 +1,48 @@
+[package]
+name = "my_calculator"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jules The AI Assistant <ai@example.com>"]
+description = "一个简单的计算器库，用于演示 Cargo 和 Crates.io 功能。"
+license = "MIT OR Apache-2.0" # crates.io 要求有许可证
+readme = "README.md" # 指定 README 文件 (如果存在)
+repository = "https://example.com/git/my_calculator" # 假设的仓库地址
+keywords = ["calculator", "math", "example", "tutorial"]
+categories = ["algorithms", "command-line-utilities"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 假设我们有一个可选的依赖用于高级数学运算
+# num-bigint = { version = "0.4", optional = true }
+# rand = "0.8" # 一个常规依赖示例
+
+# 假设我们有一个本地路径依赖 (如果这是一个工作空间的一部分)
+# utils_lib = { path = "../utils_lib", optional = true }
+
+
+[dev-dependencies]
+# 用于测试的依赖
+# assert_approx_eq = "1.1" # 例如，用于浮点数近似比较
+
+[features]
+default = [] # 默认不启用任何额外特性
+# advanced_math = ["dep:num-bigint"] # "advanced_math" 特性启用了 num-bigint 依赖
+# use_utils = ["dep:utils_lib"]      # "use_utils" 特性启用了本地的 utils_lib 依赖
+
+# 配置文件示例
+[profile.release]
+lto = true           # 启用链接时优化
+codegen-units = 1    # 减少并行代码生成单元，可能提高优化但减慢编译
+strip = true         # 从二进制文件中剥离调试符号，减小大小
+panic = "abort"      # panic 时立即终止，而不是展开
+
+# 如果这是一个库和二进制混合的项目
+# [[bin]]
+# name = "calculator_cli"
+# path = "src/main.rs"
+# required-features = ["command_line"] # 假设有一个 command_line 特性
+
+# [lib]
+# name = "my_calculator_lib" # 可以自定义库名
+# path = "src/lib.rs"

@@ -1,0 +1,21 @@
+[package]
+name = "advanced_examples"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 对于过程宏示例，如果我们要实际编写一个 derive 宏，
+# 我们会创建一个单独的 proc-macro crate。
+# 这里我们只演示如何使用，所以不需要特殊依赖。
+# 但如果想展示如何编写，则需要：
+# syn = { version = "1.0", features = ["full"] } # 用于解析 Rust 代码
+# quote = "1.0" # 用于生成 Rust 代码
+
+# 对于 FFI 示例，如果需要编译 C 代码，会用到 build-dependencies
+# [build-dependencies]
+# cc = "1.0"
+
+[build-dependencies] # 添加 cc crate 用于 FFI 示例中的 C 代码编译
+cc = "1.0"

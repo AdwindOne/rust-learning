@@ -1,0 +1,18 @@
+[package]
+name = "idioms_example"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# anyhow = "1.0" # 用于演示 anyhow 处理应用程序错误
+# thiserror = "1.0" # 用于演示 thiserror 简化自定义库错误
+# criterion = { version = "0.4", features = ["html_reports"] } # 用于基准测试 (通常在 benches 目录下)
+
+# 示例中可能不会直接使用所有这些，但列出以供参考
+# serde = { version = "1.0", features = ["derive"] } # 用于序列化/反序列化
+# rand = "0.8" # 随机数生成
+# log = "0.4" # 日志 facade
+# env_logger = "0.9" # log 的一个实现
+# clap = { version = "4.0", features = ["derive"] } # 命令行参数解析

@@ -1,0 +1,10 @@
+[package]
+name = "smart_pointers_example"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 本示例主要使用标准库中的智能指针
+# 如果需要演示更复杂的场景，如自定义分配器或特定的并发原语，可以在此添加

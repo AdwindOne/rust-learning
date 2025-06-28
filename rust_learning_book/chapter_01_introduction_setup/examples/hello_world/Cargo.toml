@@ -1,0 +1,9 @@
+[package]
+name = "hello_world_example" # 与项目目录名区分，避免 cargo new 混淆
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 本示例没有外部依赖

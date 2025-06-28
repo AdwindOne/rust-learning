@@ -1,0 +1,10 @@
+[package]
+name = "collections_example"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# 本示例没有外部依赖，如果需要 grapheme clusters，可以添加 unicode-segmentation
+# unicode-segmentation = "1.9.0"

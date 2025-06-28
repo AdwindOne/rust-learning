@@ -1,0 +1,16 @@
+[package]
+name = "adder"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+# [[bin]] # 如果这是一个混合项目（库和二进制），可以这样定义
+# name = "adder_main"
+# path = "src/main.rs"
+
+# [lib] # 默认情况下，src/lib.rs 是库的根
+# name = "adder"
+# path = "src/lib.rs"
