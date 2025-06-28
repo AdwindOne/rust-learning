@@ -10,6 +10,10 @@ fn main() {
     println!("Hello, world!"); // 打印 "Hello, world!"
     println!("你好，世界！"); // 同样可以打印中文
 
+    println!("Hello blockchain!");
+    println!("Hello Web3!");
+    println!("Hello, Rust!");
+
     // 你可以使用 `cargo run` 命令来编译并运行这个程序。
     // 或者，先使用 `cargo build` 编译，
     // 然后在 `target/debug/` 目录下找到可执行文件并运行它。
