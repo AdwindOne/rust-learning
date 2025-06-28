@@ -1,0 +1,20 @@
+[package]
+name = "rwc"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jules The AI Assistant"]
+description = "一个简单的 Rust 单词计数工具 (rwc)，模仿 wc 命令。"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.4", features = ["derive"] } # 用于命令行参数解析
+anyhow = "1.0" # 用于应用程序级别的错误处理
+
+[dev-dependencies]
+assert_cmd = "2.0" # 用于集成测试，方便地运行命令和断言
+predicates = "3.0" # 与 assert_cmd 配合使用，进行更复杂的断言
+tempfile = "3.8"   # 用于在测试中创建临时文件
+rstest = "0.18"    # 用于参数化测试和 fixtures (可选，但很好用)
+# rand = "0.8" # 如果测试需要随机数据

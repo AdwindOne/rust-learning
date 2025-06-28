@@ -1,0 +1,8 @@
+Hello Rustaceans!
+This is a sample file for testing the rwc (Rust Word Count) tool.
+It contains multiple lines,
+words, spaces, and various characters like 你好 and 😊.
+
+Let's count them all.
+123 numbers and punctuation!!!
+The end.
