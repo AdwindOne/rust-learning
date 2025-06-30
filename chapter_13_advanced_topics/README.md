@@ -564,5 +564,3 @@ Rust 编译器会根据闭包体如何使用捕获的变量来推断它应该实
                 // let sum: i32 = numbers.iter().fold(0, |acc, &x| acc + x); // sum is 15
                 ```
             *   其他常用适配器包括 `take()`, `skip()`, `zip()`, `chain()`, `enumerate()`, `rev()`, `flat_map()`, `filter_map()` 等。
-
-现在，我将为本章创建一个示例 Cargo 项目。

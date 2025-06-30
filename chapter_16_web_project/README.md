@@ -292,5 +292,3 @@ Axum 提供了多种方式来共享状态（如数据库连接池）和统一处
             4.  **请求头 (Headers)**: 使用 `axum::TypedHeader<T>` (其中 `T` 是实现了 `header::Header` trait 的类型) 或 `axum::http::HeaderMap`。
             5.  **共享状态 (State)**: 使用 `axum::extract::State<T>`。
             *   如果提取失败（例如，路径参数无法解析为指定类型，或 JSON 格式错误），Axum 会自动返回相应的错误 HTTP 响应。
-
-现在，我将开始创建 `simple_api` 项目的文件。

@@ -697,6 +697,3 @@ fn demo_expression_return() -> i32 {
         *   **重要性**: 理解这种区别对于正确处理 Rust 中的文本数据至关重要，特别是当你需要计算“字符”数量、分割字符串或在特定“字符”边界操作字符串时。直接操作字节索引而不考虑 UTF-8 边界很容易导致错误或 panic。
 
 第二章 `README.md` 已更新并包含以上面试题及其详细解释。
-我将提交这个更改。
-提交信息：`docs: Enrich Chapter 2 README with detailed interview questions`
-然后我会继续处理第三章。Tool output for `overwrite_file_with_block`:
