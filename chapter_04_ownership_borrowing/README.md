@@ -784,26 +784,4 @@ fn main_array_slice_example() { // Renamed
             4.  **更友好的错误信息**: 虽然借用错误仍然可能发生，但 NLL 有时能提供更精确、更易于理解的错误信息，指出借用冲突的具体位置。
         *   NLL 是 Rust 语言在人体工程学和表达能力方面的一个重要进步，它使得所有权和借用系统在保持安全性的同时，对开发者更加友好。NLL 是从 Rust 2018 edition 开始成为默认行为的。
 
-// Helper main function for example snippets if this file were to be compiled.
-// Actual content is in the Markdown.
-fn main() {
-    fn main_scope_example() { { let s_inner = "inner"; println!("{}", s_inner); } let s_outer = "outer"; println!("{}", s_outer); }
-    main_scope_example();
 
-    fn main_string_example() { let mut heap_string = String::from("Hello"); heap_string.push_str(", world!"); println!("Heap: {}", heap_string); }
-    main_string_example();
-
-    fn main_move_copy_example() { let x = 5; let y = x; println!("x={}, y={}", x,y); let s1 = String::from("h"); let s2 = s1; /* println!("{}",s1); */ println!("{}",s2); }
-    main_move_copy_example();
-
-    fn main_clone_example() { let s1 = String::from("h"); let s2 = s1.clone(); println!("s1={}, s2={}",s1,s2); }
-    main_clone_example();
-
-    fn main_fn_ownership_example() { fn takes_own(s:String){println!("{}",s);} fn makes_cp(i:i32){println!("{}",i);} let s=String::from("s"); takes_own(s); let x=5; makes_cp(x); println!("{}",x); }
-    main_fn_ownership_example();
-
-    main_no_dangle_caller();
-    main_slice_example();
-    main_first_word_usage();
-    main_array_slice_example();
-}

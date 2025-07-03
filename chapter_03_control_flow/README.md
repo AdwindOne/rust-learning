@@ -720,59 +720,5 @@ fn main_match_example() { // Renamed to avoid conflict with other main functions
                 ```
             *   因此，如果 `if` 表达式要返回一个非 `()` 的值，它**通常必须有 `else` 分支** (除非编译器能证明 `if` 条件总是为 `true`，这在实际代码中非常罕见)。
 
-// main 函数仅用于确保代码片段可编译，实际内容在 Markdown 中。
-// 在实际项目中，这些 main_... 函数会被移到各自的示例或测试中。
-fn main() {
-    fn main_if_else() {
-        let number = 6;
-        if number % 4 == 0 {println!("数字 {} 能被 4 整除", number);}
-        else if number % 3 == 0 {println!("数字 {} 能被 3 整除", number);}
-        else if number % 2 == 0 {println!("数字 {} 能被 2 整除", number);}
-        else {println!("数字 {} 不能被 4, 3, 或 2 整除", number);}
 
-        let condition = true;
-        let num_val = if condition { 5 } else { 6 };
-        println!("The value of num_val is: {}", num_val);
-    }
-    main_if_else();
-
-    fn main_loop_return() {
-        let mut counter = 0;
-        let result = loop { counter += 1; if counter == 3 { break counter * 2; } };
-        println!("The result from loop is: {}", result);
-    }
-    main_loop_return();
-
-    fn main_loop_labels() {
-        let mut count = 0;
-        'outer_loop: loop {
-            println!("Outer loop count = {}", count);
-            let mut remaining = 3; // Shorter loop for example
-            loop {
-                println!("  Inner loop remaining = {}", remaining);
-                if remaining == 2 { break; }
-                if count == 1 { break 'outer_loop; }
-                remaining -= 1;
-                if remaining == 0 {break;}
-            }
-            count += 1;
-            if count > 2 {break;}
-        }
-        println!("Finished loops. End count = {}", count);
-    }
-    main_loop_labels();
-
-    fn main_for_loop() {
-        let a = [1,2,3];
-        for element_ref in a.iter() { println!("  The value is: {}", element_ref); }
-        for number in (1..4).rev() { println!("{}!", number); }
-    }
-    main_for_loop();
-
-    main_match_example(); // Defined above with enums
-    main_if_let();      // Defined above
-    main_while_let();   // Defined above
-}
-```
-第三章 `README.md` 已更新并包含以上面试题及其详细解释。
 

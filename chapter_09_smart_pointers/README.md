@@ -864,5 +864,3 @@ fn main_reference_cycle_example() { // Renamed
                     // // 如果需要拥有 String，可以调用 .into_owned()
                     ```
                 *   在配置文件解析、数据处理管道等场景中，`Cow` 可以帮助优化性能，避免不必要的字符串或集合克隆。
-
-第九章 `README.md` 已更新并包含以上面试题及其详细解释。

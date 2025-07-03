@@ -584,69 +584,281 @@ fn main_if_let_deep_dive() { // Renamed
             *   **`std::cmp::Ordering`**: `enum Ordering { Less, Equal, Greater }`。由比较操作返回，表示相对顺序。
             *   **`std::io::ErrorKind`**: `enum ErrorKind { NotFound, PermissionDenied, ... }`。`std::io::Error` 的 `.kind()` 方法返回此枚举，用于区分不同类型的 I/O 错误。
 
-// Helper main function for example snippets if this file were to be compiled.
+9. examples.rs 文件中的代码示例，请将其中的注释去掉，并补充完整。
+```rust
 fn main() {
-    struct User { active: bool, username: String, email: String, sign_in_count: u64 }
-    fn main_struct_instantiation_call() {
-        let mut user1 = User { email: String::from("s@e.com"), username: String::from("u"), active: true, sign_in_count: 1};
-        user1.email = String::from("n@e.com");
-        fn build_user(email: String, username: String) -> User { User { email, username, active: true, sign_in_count: 1 } }
-        let _user2 = build_user(String::from("u2@e.com"), String::from("u2"));
-    }
     main_struct_instantiation_call();
-
-    struct UserForShorthand { active: bool, username: String, email: String, sign_in_count: u64 }
-    fn build_user_shorthand_call(email: String, username: String) -> UserForShorthand { UserForShorthand{ email, username, active:true, sign_in_count:1} }
-    build_user_shorthand_call(String::from("e"), String::from("u"));
-
-    struct UserForUpdate { active: bool, username: String, email: String, sign_in_count: u64 }
-    fn main_struct_update_call() { let u1 = UserForUpdate{email:String::from("e"),username:String::from("u"),active:true,sign_in_count:1}; let _u3=UserForUpdate{email:String::from("e3"),username:String::from("u3"),..u1}; }
     main_struct_update_call();
-
-    struct Color(i32,i32,i32); struct Point3D(f64,f64,f64);
-    fn main_tuple_structs_call(){ let _b = Color(0,0,0); let _o = Point3D(0.0,0.0,0.0); }
     main_tuple_structs_call();
-
-    struct AlwaysEqual; fn main_unit_structs_call(){ let _s=AlwaysEqual; }
     main_unit_structs_call();
-
-    #[derive(Debug)] struct Rectangle { width:u32, height:u32 }
-    impl Rectangle { fn area(&self)->u32{self.width*self.height} fn width_is_positive(&self)->bool{self.width>0} fn set_width(&mut self, w:u32){self.width=w;} fn new_constructor(w:u32,h:u32)->Self{Self{width:w,height:h}} fn square_constructor(s:u32)->Self{Self{width:s,height:s}}}
-    fn main_methods_call(){ let r1=Rectangle{width:1,height:1}; let _a=r1.area(); }
     main_methods_call();
-    fn main_associated_functions_call(){ let _r = Rectangle::new_constructor(1,1); }
     main_associated_functions_call();
-
-    #[derive(Debug)] enum IpAddrKind {V4,V6} fn route_ip(_:IpAddrKind){} fn main_enum_definition_call(){ route_ip(IpAddrKind::V4); }
     main_enum_definition_call();
-
-    #[derive(Debug)] enum IpAddrData { V4(u8,u8,u8,u8), V6(String) }
-    fn main_enum_with_data_call(){ let _h=IpAddrData::V4(1,1,1,1); }
     main_enum_with_data_call();
-
-    #[derive(Debug)] enum Message { Write(String), Move{x:i32,y:i32}, ComplexData(Box<CustomPayloadForMessage>) } #[derive(Debug)] struct CustomPayloadForMessage{id:u32,data:Vec<u8>}
-    impl Message { fn process_message(&self){match self { Message::Write(t) => println!("{}",t), Message::Move{x,y} => println!("{},{}",x,y), Message::ComplexData(d) => println!("{:?}",d)  }}}
-    fn main_message_enum_call(){ let m=Message::Write(String::from("h")); m.process_message(); }
     main_message_enum_call();
-
-    fn main_option_enum_call(){ let _s = Some(5); let _n:Option<i32>=None; }
     main_option_enum_call();
-
-    enum CoinForMatch { Penny, Nickel, Dime, Quarter } fn value_in_cents_for_match(_c: CoinForMatch) -> u8 {1} fn plus_one_option(x:Option<i32>)->Option<i32>{match x{Some(i)=>Some(i+1),None=>None}}
-    fn main_match_option_usage_call(){ let _s=plus_one_option(Some(1));}
     main_match_option_usage_call();
-
-    fn main_match_wildcard_call(){ match 9 { 1=>(), other=>println!("{}",other),};}
     main_match_wildcard_call();
-
-    fn main_if_let_deep_dive_call(){ let opt:Option<u8>=Some(1); if let Some(m)=opt {println!("{}",m)} else {println!("n");}}
     main_if_let_deep_dive_call();
 }
 
-// Dummy struct and enum for main_match_example in Markdown, which is self-contained there.
-// enum Coin { Penny, Nickel, Dime, Quarter(UsState) }
-// #[derive(Debug)] enum UsState { Alabama, Alaska }
-// fn value_in_cents(coin: Coin) -> u8 { match coin { Coin::Penny=>1, Coin::Nickel=>5, Coin::Dime=>10, Coin::Quarter(state)=>{println!("{:?}",state); 25}}}
-// fn main_match_example() { value_in_cents(Coin::Quarter(UsState::Alaska)); }
+// === Struct 创建与构造器 ===
+
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn build_user(email: String, username: String) -> User {
+    User {
+        email,
+        username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+fn main_struct_instantiation_call() {
+    let mut user1 = User {
+        email: String::from("s@e.com"),
+        username: String::from("u"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    user1.email = String::from("n@e.com");
+
+    let _user2 = build_user(String::from("u2@e.com"), String::from("u2"));
+}
+
+struct UserForShorthand {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn build_user_shorthand_call(email: String, username: String) -> UserForShorthand {
+    UserForShorthand {
+        email,
+        username,
+        active: true,
+        sign_in_count: 1,
+    }
+}
+
+// === Struct 更新语法 ===
+
+struct UserForUpdate {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn main_struct_update_call() {
+    let u1 = UserForUpdate {
+        email: String::from("e"),
+        username: String::from("u"),
+        active: true,
+        sign_in_count: 1,
+    };
+
+    let _u3 = UserForUpdate {
+        email: String::from("e3"),
+        username: String::from("u3"),
+        ..u1
+    };
+}
+
+// === 元组结构体与单元结构体 ===
+
+struct Color(i32, i32, i32);
+struct Point3D(f64, f64, f64);
+
+fn main_tuple_structs_call() {
+    let _black = Color(0, 0, 0);
+    let _origin = Point3D(0.0, 0.0, 0.0);
+}
+
+struct AlwaysEqual;
+
+fn main_unit_structs_call() {
+    let _unit = AlwaysEqual;
+}
+
+// === Struct 方法与关联函数 ===
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn width_is_positive(&self) -> bool {
+        self.width > 0
+    }
+
+    fn set_width(&mut self, w: u32) {
+        self.width = w;
+    }
+
+    fn new_constructor(w: u32, h: u32) -> Self {
+        Self {
+            width: w,
+            height: h,
+        }
+    }
+
+    fn square_constructor(s: u32) -> Self {
+        Self {
+            width: s,
+            height: s,
+        }
+    }
+}
+
+fn main_methods_call() {
+    let r1 = Rectangle {
+        width: 1,
+        height: 1,
+    };
+    let _area = r1.area();
+}
+
+fn main_associated_functions_call() {
+    let _r = Rectangle::new_constructor(1, 1);
+}
+
+// === 枚举定义与使用 ===
+
+#[derive(Debug)]
+enum IpAddrKind {
+    V4,
+    V6,
+}
+
+fn route_ip(kind: IpAddrKind) {
+    println!("Routing IP: {:?}", kind);
+}
+
+fn main_enum_definition_call() {
+    route_ip(IpAddrKind::V4);
+}
+
+#[derive(Debug)]
+enum IpAddrData {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+fn main_enum_with_data_call() {
+    let _home = IpAddrData::V4(127, 0, 0, 1);
+}
+
+// === 枚举 + match 模式匹配 ===
+
+#[derive(Debug)]
+enum Message {
+    Write(String),
+    Move { x: i32, y: i32 },
+    ComplexData(Box<CustomPayloadForMessage>),
+}
+
+#[derive(Debug)]
+struct CustomPayloadForMessage {
+    id: u32,
+    data: Vec<u8>,
+}
+
+impl Message {
+    fn process_message(&self) {
+        match self {
+            Message::Write(text) => println!("Write: {}", text),
+            Message::Move { x, y } => println!("Move to: {}, {}", x, y),
+            Message::ComplexData(payload) => println!("Complex: {:?}", payload),
+        }
+    }
+}
+
+fn main_message_enum_call() {
+    let m = Message::Write(String::from("hello"));
+    m.process_message();
+}
+
+// === Option 枚举示例 ===
+
+fn main_option_enum_call() {
+    let _some_val = Some(5);
+    let _none_val: Option<i32> = None;
+}
+
+// === match 匹配 Option ===
+
+fn plus_one_option(x: Option<i32>) -> Option<i32> {
+    match x {
+        Some(i) => Some(i + 1),
+        None => None,
+    }
+}
+
+fn main_match_option_usage_call() {
+    let _result = plus_one_option(Some(1));
+}
+
+// === match 通配符 ===
+
+fn main_match_wildcard_call() {
+    match 9 {
+        1 => (),
+        other => println!("Matched: {}", other),
+    }
+}
+
+// === if let 用法 ===
+
+fn main_if_let_deep_dive_call() {
+    let opt: Option<u8> = Some(1);
+
+    if let Some(m) = opt {
+        println!("Value: {}", m);
+    } else {
+        println!("None");
+    }
+}
+
+// === 可选扩展：复杂匹配示例 ===
+// #[derive(Debug)]
+// enum UsState {
+//     Alabama,
+//     Alaska,
+// }
+// enum Coin {
+//     Penny,
+//     Nickel,
+//     Dime,
+//     Quarter(UsState),
+// }
+// fn value_in_cents(coin: Coin) -> u8 {
+//     match coin {
+//         Coin::Penny => 1,
+//         Coin::Nickel => 5,
+//         Coin::Dime => 10,
+//         Coin::Quarter(state) => {
+//             println!("State: {:?}", state);
+//             25
+//         }
+//     }
+// }
+// fn main_match_example() {
+//     value_in_cents(Coin::Quarter(UsState::Alaska));
+// }
+
 ```
-第五章 `README.md` 已更新并包含以上面试题及其详细解释。

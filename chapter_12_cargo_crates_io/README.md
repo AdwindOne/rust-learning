@@ -846,5 +846,3 @@ Cargo 是 Rust 生态系统的核心工具，它极大地简化了 Rust 项目�
             *   如果一个 crate `A` 的某个特性 `feat_x` 依赖于其依赖项 `B` 的某个特性 `feat_y` (例如，在 `A` 的 `Cargo.toml` 中写 `feat_x = ["B/feat_y"]`)，那么当 `A` 的 `feat_x` 被启用时，`B` 的 `feat_y` 也会被自动启用。
             *   **默认特性**: 如果一个依赖项在其 `Cargo.toml` 中定义了 `default` 特性，那么当你的项目依赖该 crate 时，除非你显式地使用 `default-features = false` 来禁用它们，否则这些默认特性总是会被启用。
         *   **总结**: Cargo 的特性解析通过取所有请求特性的并集来工作，旨在最大化兼容性。Crate 作者应努力设计加性的、非互斥的特性。用户可以通过 `default-features = false` 和显式指定 `features = [...]` 来更细粒度地控制启用的特性。
-
-第十二章 `README.md` 已更新并包含以上面试题及其详细解释。
