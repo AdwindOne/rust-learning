@@ -96,6 +96,11 @@ fn main() {
     // println!("试图访问越界元素: {}", out_of_bounds);
     // 使用 .get() 方法安全访问
     let safe_access = arr_a.get(2); // 返回 Option<&i32>
+    if let Some(value) = safe_access {
+        println!("Safe access value is: {}", value);  // 输出 3
+    } else {
+        println!("Safe access does not exist");
+    }
     let safe_access_out = arr_a.get(10);
     println!("安全访问 arr_a[2]: {:?}, 安全访问 arr_a[10]: {:?}", safe_access, safe_access_out);
 
